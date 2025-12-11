@@ -2,7 +2,28 @@
 
 A RAG AI agent that answers questions about someone famous (in this case Bill Gates). It uses a **local PDF knowledge base** for biographical facts and **Tavily Web Search** for up-to-date information.
 
-Built using **LangGraph** for state management, **LangChain** for orchestration, and **OpenAI (GPT-4o)** as the reasoning engine.
+# Data Source
+The included sample data (data_archive/billgates.pdf) is a compiled biographical summary based on Wikipedia. You can replace this with any PDF of your choice.
+
+# Project Structure
+
+To ensure the relative paths in the scripts work correctly, organize your project files as follows:
+
+```text
+project-root/
+├── data_archive/           # Place your pdf here
+├── chroma_db/              # Local vector database that is created in ingest.py
+├── images/                 # The saved images
+├── ingest.py               # Script to process PDF and create DB
+├── ragagent.py             # Main chat application logic
+├── requirements.txt        # Python dependencies
+├── .env                    # API Keys (.env_example can be renamed)
+└── README.md               # Documentation
+```
+
+# Architecture graph
+
+![The Agent Architecture](images/agent_graph.png)
 
 ## Features
 
@@ -49,7 +70,7 @@ Built using **LangGraph** for state management, **LangChain** for orchestration,
 
 2.  **Data Setup:**
     * Create a folder named `data_archive` in the root directory (if it doesn't exist).
-    * Place your `billgates.pdf` file inside `data_archive/`.
+    * Place your `namehere.pdf` file inside `data_archive/`.
 
 ## Usage
 
@@ -66,17 +87,9 @@ python ingest.py
 Once the database is created, you can run the chat agent as many times as you like.
 
 ```bash
-python main.py
+python ragagent.py
 ```
 ## Interaction:
+* The application asks for the name of the person at the beginning (Defaults to Bill Gates).
 * Type your question when prompted.
 * Type exit or quit to stop the program.
-
-# Project Structure
-├── data_archive/           # Place your pdf here
-├── chroma_db/              # Local vector database
-├── ingest.py               # Script to process PDF and create DB
-├── main.py                 # Main chat application logic
-├── requirements.txt        # Python dependencies
-├── .env                    # API Keys
-└── README.md               # Documentation

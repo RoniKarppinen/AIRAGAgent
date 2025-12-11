@@ -149,9 +149,12 @@ def run_document_agent():
     global SUBJECT_NAME
     
     print("\nRWelcome to the RAG Agent!")
-    user_name = input(f"Who is the subject? (Press Enter for default: '{SUBJECT_NAME}'): ").strip()
+    user_name = input(f"Who is the subject? (Press Enter for default: \"{SUBJECT_NAME}\"): ").strip()
     
-    if user_name:
+    if user_name.lower() in ["exit", "quit"]: # Edge case
+        print("Exiting RAG Agent. Goodbye!")
+        return
+    elif user_name:
         SUBJECT_NAME = user_name
         print(f"Subject set to: {SUBJECT_NAME}")
     else:
@@ -169,5 +172,35 @@ def run_document_agent():
         result = rag_agent.invoke({"messages": messages})
         print(f"\nResponse:\n{result['messages'][-1].content}")
 
+# For visualization purposes only
+# def visualize_graph(agent_app, filename="agent_graph.png"):
+#     """
+#     Visualizes the LangGraph agent and saves it as a PNG image in the 'images' folder.
+#     """
+#     images_dir = "images"
+
+#     if not os.path.exists(images_dir):
+#         os.makedirs(images_dir)
+#         print(f"Created directory: {images_dir}")
+
+#     # Create the full path (images/agent_graph.png)
+#     filepath = os.path.join(images_dir, filename)
+
+#     print(f"\nGenerating graph image as '{filepath}'...")
+#     try:
+#         # Get the graph structure and render it as a PNG
+#         graph_image = agent_app.get_graph().draw_mermaid_png()
+        
+#         with open(filepath, "wb") as f:
+#             f.write(graph_image)
+            
+#         print(f"Success! Graph saved to {os.path.abspath(filepath)}")
+        
+#     except Exception as e:
+#         print(f"Could not generate image: {e}")
+
+
+
 if __name__ == "__main__":
+    # visualize_graph(rag_agent)
     run_document_agent()
